@@ -1,0 +1,23 @@
+{
+  "name": "Query",
+  "kind": "OBJECT",
+  "fields": [
+    {
+      "name": "user",
+      "args": [
+        {
+          "name": "id",
+          "type": {
+            "kind": "SCALAR",
+            "name": "ID"
+          }
+        }
+      ],
+      "type": {
+        "kind": "OBJECT",
+        "name": "User"
+      }
+    }
+  ],
+  "interfaces": []
+}

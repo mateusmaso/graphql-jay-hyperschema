@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "posts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/post"
+      }
+    }
+  },
+  "required": ["id", "name", "email"],
+  "links": [
+    {
+      "rel": "self",
+      "href": "/users/{id}",
+      "method": "GET",
+      "targetSchema": {
+        "$ref": "#/definitions/user"
+      }
+    },
+    {
+      "rel": "posts",
+      "href": "/users/{id}/posts",
+      "method": "GET",
+      "targetSchema": {
+        "$ref": "#/definitions/post"
+      }
+    }
+  ]
+}

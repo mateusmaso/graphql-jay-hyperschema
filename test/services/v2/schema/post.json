@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "title": {
+      "type": "string"
+    },
+    "creatorId": {
+      "type": "number"
+    },
+    "creator": {
+      "$ref": "#/definitions/user"
+    }
+  },
+  "required": ["id", "title", "creatorId"],
+  "links": [
+    {
+      "rel": "self",
+      "href": "/posts/{id}",
+      "method": "GET",
+      "targetSchema": {
+        "$ref": "#/definitions/post"
+      }
+    },
+    {
+      "rel": "creator",
+      "href": "/users/{creatorId}",
+      "method": "GET",
+      "targetSchema": {
+        "$ref": "#/definitions/user"
+      }
+    }
+  ]
+}

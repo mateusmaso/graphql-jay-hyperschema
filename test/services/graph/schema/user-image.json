@@ -1,0 +1,23 @@
+{
+  "name": "UserImage",
+  "kind": "OBJECT",
+  "fields": [
+    {
+      "name": "small",
+      "args": [],
+      "type": {
+        "kind": "SCALAR",
+        "name": "String"
+      }
+    },
+    {
+      "name": "large",
+      "args": [],
+      "type": {
+        "kind": "SCALAR",
+        "name": "String"
+      }
+    }
+  ],
+  "interfaces": []
+}

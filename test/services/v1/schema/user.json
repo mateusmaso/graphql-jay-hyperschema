@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "name"],
+  "links": [
+    {
+      "rel": "self",
+      "href": "/users/{id}",
+      "method": "GET",
+      "targetSchema": {
+        "$ref": "#/definitions/user"
+      }
+    }
+  ]
+}
