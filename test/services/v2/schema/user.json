@@ -1,5 +1,6 @@
 {
   "type": "object",
+  "title": "User",
   "properties": {
     "id": {
       "type": "number"
@@ -15,24 +16,26 @@
       "items": {
         "$ref": "#/definitions/post"
       }
+    },
+    "postsUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": ["id", "name", "email"],
   "links": [
     {
-      "rel": "self",
-      "href": "/users/{id}",
-      "method": "GET",
-      "targetSchema": {
-        "$ref": "#/definitions/user"
-      }
-    },
-    {
       "rel": "posts",
-      "href": "/users/{id}/posts",
+      "each": "postsUrls",
+      "href": "{+item}",
       "method": "GET",
       "targetSchema": {
-        "$ref": "#/definitions/post"
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/post"
+        }
       }
     }
   ]

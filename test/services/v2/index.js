@@ -1,9 +1,12 @@
-import schema from "./schema";
-import {hyperSchemaAdapter} from "../../../../graphql-jay-hyperschema/lib";
+import schema from "./schema"
+import {adapter} from "../../../lib"
+
+var url = "http://localhost:8080/api/v2"
 
 export default function v2() {
   return {
+    url,
     schema,
-    adapter: hyperSchemaAdapter
+    adapter
   }
-};
+}

@@ -9,29 +9,35 @@
     "babel-cli": "^6.14.0",
     "babel-register": "^6.14.0",
     "babel-preset-es2015": "^6.5.0",
-    "graphql": "^0.7.0",
+    "graphql": "^0.7.2",
+    "graphql-jay": "file:../graphql-jay",
     "express": "^4.13.4",
-    "express-graphql": "^0.5.4",
+    "morgan": "^1.7.0",
     "body-parser": "^1.15.1",
-    "cors": "^2.7.1",
-    "camelcase": "^3.0.0",
-    "pascalcase": "^0.1.1",
-    "z-schema": "^3.17.0",
-    "json-schema-ref-parser": "^3.1.2",
+    "cors": "^2.7.1"
+  },
+  "dependencies": {
+    "clone": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
-    "clone": "^1.0.2"
+    "json-schema-ref-parser": "^3.1.2",
+    "z-schema": "^3.17.0",
+    "uuid": "^2.0.3",
+    "traverse": "^0.6.6",
+    "uri-template": "^1.0.1",
+    "bluebird": "^3.4.6"
   },
   "repository": {
-    "type" : "git",
+    "type": "git",
     "url": "http://github.com/mateusmaso/graphql-jay-hyperschema"
   },
   "scripts": {
-    "start": "node test/server/index.js",
+    "start": "node test/server",
     "build": "babel src --out-dir lib",
     "pretest": "npm run build",
     "test": "mocha --require babel-register"
   },
   "engines": {
-    "node" : "~5.9.0"
-  }
+    "node": "~5.9.0"
+  },
+  "main": "lib/index.js"
 }

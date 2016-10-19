@@ -1,80 +1,35 @@
-import {expect} from "chai";
-import {graphql} from "graphql";
-import {composeSchema} from "../lib";
-import {v1, v2, graph} from "./services";
+import {expect} from "chai"
+import {graphql} from "graphql"
+import {composeSchema} from "graphql-jay"
+import {v1, v2} from "./services"
 
-var graphQLJaySchema;
+var graphQLJaySchema
 
-describe("graphql-jay", () => {
+describe("graphql-jay-hyperschema", () => {
   before(() => {
-    return composeSchema(v1, v2, graph).then((schema) => {
-      graphQLJaySchema = schema;
+    return composeSchema(v1, v2).then((schema) => {
+      graphQLJaySchema = schema
     }).catch((error) => {
-      console.log("error: ", error);
-    });
-  });
+      console.log("Error", error)
+    })
+  })
 
-  it("should request user (v1)", () => {
-    graphql(graphQLJaySchema, `{
+  it("should request user", () => {
+    return graphql(graphQLJaySchema, `{
       user(id: 1) {
         id
         name
+        email
+        posts {
+          title
+          creator {
+            id
+          }
+        }
       }
     }`).then((response) => {
-      console.log("data: ", response.data)
-      expect(response.data).to.have.keys("user");
-    });
-  });
-
-  // it("should request user (v1) + posts (v2)", () => {
-  //   graphql(graphQLJaySchema, `{
-  //     user(id: 1) {
-  //       id
-  //       name
-  //       posts {
-  //         id
-  //       }
-  //     }
-  //   }`).then((response) => {
-  //     expect(response.data).to.have.keys("user");
-  //   });
-  // });
-  //
-  // it("should request user (v1) + posts (v2) + creator (v2)", () => {
-  //   graphql(graphQLJaySchema, `{
-  //     user(id: 1) {
-  //       id
-  //       name
-  //       posts {
-  //         id
-  //         creator {
-  //           id
-  //           email
-  //         }
-  //       }
-  //     }
-  //   }`).then((response) => {
-  //     expect(response.data).to.have.keys("user");
-  //   });
-  // });
-  //
-  // it("should request user (v1) + posts (v2) + creator (v1) + image (graph)", () => {
-  //   graphql(graphQLJaySchema, `{
-  //     user(id: 1) {
-  //       id
-  //       name
-  //       posts {
-  //         id
-  //         creator {
-  //           id
-  //           image {
-  //             small
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }`).then((response) => {
-  //     expect(response.data).to.have.keys("user");
-  //   });
-  // });
-});
+      console.log("Response", JSON.stringify(response))
+      expect(response.data).to.have.keys("user")
+    })
+  })
+})

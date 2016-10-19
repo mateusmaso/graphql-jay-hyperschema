@@ -1,22 +1,10 @@
-import clone from 'clone';
+import {transformAST as graphQLJayTransformAST} from "graphql-jay"
 
-export function transformAST(schema, ast) {
-  ast = clone(ast);
+export function transformAST(schema, clientSchema, ast) {
+  var ast = graphQLJayTransformAST(schema, clientSchema, ast)
 
-  var reduceAST = (type, fields) => {
-    Object.keys(fields).forEach((fieldName) => {
-      var field = fields[fieldName];
-      var typeField = type.getFields()[fieldName];
+  // add over-fetching attrs
+  // add key when ast field is fetch
 
-      if (!typeField) {
-        delete fields[fieldName];
-      } else {
-        reduceAST(typeField.type, field.fields);
-      }
-    });
-  };
-
-  reduceAST(schema.getQueryType(), ast);
-
-  return ast;
+  return ast
 }

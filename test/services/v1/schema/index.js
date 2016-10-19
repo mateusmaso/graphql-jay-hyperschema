@@ -1,4 +1,4 @@
-import user from './user.json';
+import user from './user.json'
 
 let schema = {
   "$schema": "http://json-schema.org/draft-04/hyper-schema#",
@@ -11,7 +11,25 @@ let schema = {
     "user": {
       "$ref": "#/definitions/user"
     }
-  }
-};
+  },
+  "links": [
+    {
+      "rel": "user",
+      "href": "/users/{id}",
+      "method": "GET",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          }
+        }
+      },
+      "targetSchema": {
+        "$ref": "#/definitions/user"
+      }
+    }
+  ]
+}
 
-export default schema;
+export default schema

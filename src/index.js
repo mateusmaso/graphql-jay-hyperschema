@@ -1,13 +1,13 @@
-import {buildClientSchema} from "./buildClientSchema";
-import {transformAST} from "./transformAST";
-import {buildRequest} from "./buildRequest";
+import {buildClientSchema} from "./buildClientSchema"
+import {transformAST} from "./transformAST"
+import {fetchData} from "./fetchData"
 
-let hyperSchemaAdapter = {
+let adapter = {
   buildClientSchema,
   transformAST,
-  buildRequest
+  fetchData
 }
 
 export {
-  hyperSchemaAdapter
+  adapter
 }

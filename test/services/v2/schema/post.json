@@ -1,5 +1,6 @@
 {
   "type": "object",
+  "title": "Post",
   "properties": {
     "id": {
       "type": "number"
@@ -16,14 +17,6 @@
   },
   "required": ["id", "title", "creatorId"],
   "links": [
-    {
-      "rel": "self",
-      "href": "/posts/{id}",
-      "method": "GET",
-      "targetSchema": {
-        "$ref": "#/definitions/post"
-      }
-    },
     {
       "rel": "creator",
       "href": "/users/{creatorId}",
