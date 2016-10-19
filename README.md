@@ -1,4 +1,4 @@
-# graphql-jay-hyperschema
+# graphql-jay-hyperschema [![Build Status](https://travis-ci.org/mateusmaso/graphql-jay-hyperschema.svg?branch=master)](https://travis-ci.org/mateusmaso/graphql-jay-hyperschema)
 
 GraphQLJay adapter for JSON Hyper-Schema (draft-04)
 
@@ -54,3 +54,7 @@ export default function myService() {
   }
 }
 ```
+
+## License
+
+MIT © [Mateus Maso](http://www.mateusmaso.com)
