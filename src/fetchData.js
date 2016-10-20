@@ -2,13 +2,13 @@ import fetch from "isomorphic-fetch"
 import URITemplateParser from 'uri-template'
 import Bluebird from 'bluebird'
 
-export function fetchData(schema, ast, url) {
-  return resolveFields(ast.fields, schema, {}, url).then((data) => {
+export function fetchData(schema, ast, url, fetchFn) {
+  return resolveFields(ast.fields, schema, {}, url, fetchFn).then((data) => {
     return data
   })
 }
 
-function resolveFields(fields, property, parentData, url) {
+function resolveFields(fields, property, parentData, url, fetchFn) {
   var data = {}
   var requests = []
 
@@ -24,7 +24,7 @@ function resolveFields(fields, property, parentData, url) {
     })
 
     if (link) {
-      requests.push(resolveLink(link, astField.args, parentData, url).then((fieldData) => {
+      requests.push(resolveLink(link, astField.args, parentData, url, fetchFn).then((fieldData) => {
         data[astFieldName] = fieldData
 
         var targetProperty = link.targetSchema
@@ -35,12 +35,12 @@ function resolveFields(fields, property, parentData, url) {
 
         if (Array.isArray(fieldData)) {
           return batch(fieldData, (fieldItemData, index) => {
-            return resolveFields(astField.fields, targetProperty, fieldItemData, url).then((resolvedFieldData) => {
+            return resolveFields(astField.fields, targetProperty, fieldItemData, url, fetchFn).then((resolvedFieldData) => {
               fieldData[index] = Object.assign(fieldItemData, resolvedFieldData)
             })
           })
         } else {
-          return resolveFields(astField.fields, targetProperty, fieldData, url).then((resolvedFieldData) => {
+          return resolveFields(astField.fields, targetProperty, fieldData, url, fetchFn).then((resolvedFieldData) => {
             data[astFieldName] = Object.assign(fieldData, resolvedFieldData)
           })
         }
@@ -51,12 +51,12 @@ function resolveFields(fields, property, parentData, url) {
 
       if (fieldProperty.type == "array") {
         requests.push(batch(fieldData, (fieldItemData, index) => {
-          return resolveFields(astField.fields, fieldProperty.items, fieldItemData, url).then((resolvedFieldData) => {
+          return resolveFields(astField.fields, fieldProperty.items, fieldItemData, url, fetchFn).then((resolvedFieldData) => {
             fieldData[index] = Object.assign(fieldItemData, resolvedFieldData)
           })
         }))
       } else if (fieldProperty.type == "object") {
-        requests.push(resolveFields(astField.fields, fieldProperty, fieldData, url).then((resolvedFieldData) => {
+        requests.push(resolveFields(astField.fields, fieldProperty, fieldData, url, fetchFn).then((resolvedFieldData) => {
           data[astFieldName] = Object.assign(fieldData, resolvedFieldData)
         }))
       }
@@ -68,7 +68,8 @@ function resolveFields(fields, property, parentData, url) {
   })
 }
 
-function resolveLink(link, astFieldArgs, parentData, url) {
+function resolveLink(link, astFieldArgs, parentData, url, fetchFn) {
+  var performFetch = fetchFn || fetch
   var uriTemplate = URITemplateParser.parse(link.href)
   var context = Object.assign({}, astFieldArgs, parentData)
 
@@ -80,7 +81,7 @@ function resolveLink(link, astFieldArgs, parentData, url) {
         uri = `${url}${uri}`
       }
 
-      return fetch(uri, {
+      return performFetch(uri, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -96,7 +97,7 @@ function resolveLink(link, astFieldArgs, parentData, url) {
       uri = `${url}${uri}`
     }
 
-    return fetch(uri, {
+    return performFetch(uri, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

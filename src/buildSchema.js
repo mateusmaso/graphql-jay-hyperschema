@@ -7,7 +7,7 @@ import URITemplateParser from 'uri-template'
 
 var typePropertyMap = {}
 
-export function buildClientSchema(hyperSchema) {
+export function buildSchema(hyperSchema) {
   // if (!validateHyperSchema(hyperSchema)) {
   //   throw new Error("Can't validate JSON Hyper-Schema (v4)")
   // }

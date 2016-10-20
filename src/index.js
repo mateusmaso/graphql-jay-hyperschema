@@ -1,9 +1,9 @@
-import {buildClientSchema} from "./buildClientSchema"
+import {buildSchema} from "./buildSchema"
 import {transformAST} from "./transformAST"
 import {fetchData} from "./fetchData"
 
 let adapter = {
-  buildClientSchema,
+  buildSchema,
   transformAST,
   fetchData
 }

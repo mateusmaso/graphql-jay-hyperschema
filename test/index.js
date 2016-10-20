@@ -3,19 +3,19 @@ import {graphql} from "graphql"
 import {composeSchema} from "graphql-jay"
 import {v1, v2} from "./services"
 
-var graphQLJaySchema
-
 describe("graphql-jay-hyperschema", () => {
+  var schema
+
   before(() => {
-    return composeSchema(v1, v2).then((schema) => {
-      graphQLJaySchema = schema
+    return composeSchema(v1, v2).then((_) => {
+      schema = _
     }).catch((error) => {
-      console.log("Error", error)
+      console.warn(error)
     })
   })
 
   it("should request user", () => {
-    return graphql(graphQLJaySchema, `{
+    return graphql(schema, `{
       user(id: 1) {
         id
         name
@@ -28,7 +28,7 @@ describe("graphql-jay-hyperschema", () => {
         }
       }
     }`).then((response) => {
-      console.log("Response", JSON.stringify(response))
+      console.log(JSON.stringify(response))
       expect(response.data).to.have.keys("user")
     })
   })
