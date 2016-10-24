@@ -1,6 +1,7 @@
 import fetch from "isomorphic-fetch"
 import URITemplateParser from 'uri-template'
 import Bluebird from 'bluebird'
+import deepEqual from 'deep-equal'
 
 export function fetchData(schema, ast, url, fetchFn) {
   return resolveFields(ast.fields, schema, {}, url, fetchFn).then((data) => {
@@ -22,6 +23,14 @@ function resolveFields(fields, property, parentData, url, fetchFn) {
     var link = links.find((link) => {
       return link.rel == astFieldName
     })
+
+    var relLink = links.find((_link) => {
+      return _link.linkRel && _link.linkRel.id == link.id && deepEqual(_link.linkRel.values, astField.args)
+    })
+
+    if (relLink) {
+      link = relLink
+    }
 
     if (link) {
       requests.push(resolveLink(link, astField.args, parentData, url, fetchFn).then((fieldData) => {

@@ -1,4 +1,3 @@
-import ZSchema from "z-schema"
 import $RefParser from 'json-schema-ref-parser'
 import {buildClientSchema as graphQLBuildClientSchema} from 'graphql'
 import uuid from "uuid"
@@ -8,10 +7,6 @@ import URITemplateParser from 'uri-template'
 var typePropertyMap = {}
 
 export function buildSchema(hyperSchema) {
-  // if (!validateHyperSchema(hyperSchema)) {
-  //   throw new Error("Can't validate JSON Hyper-Schema (v4)")
-  // }
-
   return $RefParser.dereference(hyperSchema).then((hyperSchema) => {
     var customTypes = customTypesFromHyperSchema(hyperSchema)
     var queryType = queryTypeFromHyperSchema(hyperSchema, customTypes)
@@ -28,11 +23,6 @@ export function buildSchema(hyperSchema) {
       }
     })
   })
-}
-
-function validateHyperSchema(hyperSchema) {
-  var validator = new ZSchema()
-  return validator.validateSchema(hyperSchema)
 }
 
 function customTypesFromHyperSchema(hyperSchema) {
@@ -68,11 +58,11 @@ function customTypesFromHyperSchema(hyperSchema) {
       var fieldProperty = property.properties[fieldPropertyName]
       var links = property.links || []
 
-      var link = links.find((link) => {
+      var links = links.filter((link) => {
         return link.rel == fieldPropertyName
       })
 
-      return parseField(fieldPropertyName, fieldProperty, link, {types})
+      return parseField(fieldPropertyName, fieldProperty, links, {types})
     })
   })
 
@@ -87,19 +77,24 @@ function queryTypeFromHyperSchema(hyperSchema, types) {
     "interfaces": []
   }
 
-  var links = hyperSchema.links || []
+  Object.keys(hyperSchema.properties).forEach((propertyName) => {
+    var property = hyperSchema.properties[propertyName]
+    var links = hyperSchema.links || []
 
-  links.forEach((link) => {
-    queryType.fields.push(parseField(link.rel, link.targetSchema, link, {types}))
+    var links = links.filter((link) => {
+      return link.rel == propertyName
+    })
+
+    queryType.fields.push(parseField(propertyName, property, links, {types}))
   })
 
   return queryType
 }
 
-function parseField(name, property, link, {types}) {
+function parseField(name, property, links, {types}) {
   var args = []
 
-  if (link) {
+  links.forEach((link) => {
     var uriTemplate = URITemplateParser.parse(link.href)
 
     uriTemplate.expressions.forEach((expression) => {
@@ -115,6 +110,10 @@ function parseField(name, property, link, {types}) {
         }
       })
     })
+  })
+
+  if (links.length > 0) {
+    property = links[0].targetSchema
   }
 
   var type = convertType(property, types)

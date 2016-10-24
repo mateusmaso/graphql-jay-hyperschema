@@ -20,11 +20,11 @@
     "clone": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
     "json-schema-ref-parser": "^3.1.2",
-    "z-schema": "^3.17.0",
     "uuid": "^2.0.3",
     "traverse": "^0.6.6",
     "uri-template": "^1.0.1",
-    "bluebird": "^3.4.6"
+    "bluebird": "^3.4.6",
+    "deep-equal": "^1.0.1"
   },
   "repository": {
     "type": "git",

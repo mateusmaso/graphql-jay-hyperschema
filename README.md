@@ -55,6 +55,36 @@ export default function myService() {
 }
 ```
 
+## ```LDO``` extra properties
+
+**each**
+
+Use to resolve relations with an unique ```href``` for each item from a target field.
+
+```json
+{
+  "rel": "urls",
+  "href": "{+item}",
+  "each": "urls"
+}
+```
+
+**linkRel**
+
+Use to relate to another ```LDO``` based on ```schema``` values.
+
+```json
+{
+  "rel": "tatooine",
+  "linkRel": {
+    "id": "planetWithId",
+    "values": {
+      "id": "1"
+    }
+  }
+}
+```
+
 ## License
 
 MIT © [Mateus Maso](http://www.mateusmaso.com)
