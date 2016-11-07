@@ -13,8 +13,8 @@ $ npm install --save graphql-jay-hyperschema
 ```javascript
 import {adapter} from "graphql-jay-hyperschema"
 
-export default function myService() {  
-  var schema = {
+export default function service() {  
+  var metadata = {
     "$schema": "http://json-schema.org/draft-04/hyper-schema#",
     "type": "object",
     "definitions": {
@@ -49,7 +49,7 @@ export default function myService() {
   }
 
   return {
-    schema,
+    metadata,
     adapter
   }
 }

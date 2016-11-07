@@ -1,9 +1,9 @@
 import {transformAST as graphQLJayTransformAST} from "graphql-jay"
 
-export function transformAST(schema, clientSchema, ast) {
-  var ast = graphQLJayTransformAST(schema, clientSchema, ast)
+export function transformAST(hyperSchema, schema, ast) {
+  var ast = graphQLJayTransformAST(hyperSchema, schema, ast)
 
-  // add over-fetching attrs
+  // TODO: add over-fetching attrs
 
   return ast
 }

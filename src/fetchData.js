@@ -3,8 +3,8 @@ import URITemplateParser from 'uri-template'
 import Bluebird from 'bluebird'
 import deepEqual from 'deep-equal'
 
-export function fetchData(schema, ast, url, fetchFn) {
-  return resolveFields(ast.fields, schema, {}, url, fetchFn).then((data) => {
+export function fetchData(hyperSchema, ast, url, fetchFn) {
+  return resolveFields(ast.fields, hyperSchema, {}, url, fetchFn).then((data) => {
     return data
   })
 }
