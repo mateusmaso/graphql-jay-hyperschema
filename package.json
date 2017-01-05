@@ -1,6 +1,6 @@
 {
   "name": "graphql-jay-hyperschema",
-  "description": "GraphQLJay adapter for JSON Hyper-Schema (draft-04)",
+  "description": "GraphQL Jay adapter for JSON Hyper-Schema (draft-04)",
   "version": "0.1.0",
   "license": "MIT",
   "devDependencies": {
@@ -31,13 +31,13 @@
     "url": "http://github.com/mateusmaso/graphql-jay-hyperschema"
   },
   "scripts": {
-    "start": "node test/server",
     "build": "babel src --out-dir lib",
     "pretest": "npm run build",
-    "test": "mocha --require babel-register"
+    "test": "node test/server & mocha --require babel-register",
+    "posttest": "lsof -t -i tcp:8080 | xargs kill"
   },
   "engines": {
-    "node": "~5.9.0"
+    "node": "~7.3.0"
   },
   "main": "lib/index.js"
 }

@@ -1,6 +1,6 @@
 # graphql-jay-hyperschema [![Build Status](https://travis-ci.org/mateusmaso/graphql-jay-hyperschema.svg?branch=master)](https://travis-ci.org/mateusmaso/graphql-jay-hyperschema)
 
-GraphQLJay adapter for JSON Hyper-Schema (draft-04)
+GraphQL Jay adapter for JSON Hyper-Schema (draft-04)
 
 ## Install
 
@@ -12,6 +12,8 @@ $ npm install --save graphql-jay-hyperschema
 
 ```javascript
 import {adapter} from "graphql-jay-hyperschema"
+
+var url = "http://myservice.com/api/v1"
 
 export default function service() {  
   var metadata = {
@@ -49,6 +51,7 @@ export default function service() {
   }
 
   return {
+    url,
     metadata,
     adapter
   }
