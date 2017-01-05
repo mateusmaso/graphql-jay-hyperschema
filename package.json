@@ -2,6 +2,7 @@
   "name": "graphql-jay-hyperschema",
   "description": "GraphQL Jay adapter for JSON Hyper-Schema (draft-04)",
   "version": "0.1.0",
+  "author": "mateusmaso",
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
